@@ -1,50 +1,55 @@
-# 演化学习 Evolutionary Learning
+# Evolutionary Learning 演化学习
 
 ## 演化学习算法
 
-1. $(1+1)-EA$
+#### (1+1)-EA
+```python
+EvoLearn.Alg_1_1_EA(n, iter)
+```
+#### (1+1)-EA≠
    ```python
-   EvoLearn.Alg_1_1_EA(n=n, iter=iter)
+   EvoLearn.Alg_1_1_EA(n, iter, strict=True)
    ```
-2. $(1+1)-EA^{\neq}$
+#### RLS
    ```python
-   EvoLearn.Alg_1_1_EA(n=n, iter=iter, strict=True)
+   EvoLearn.Alg_1_1_EA(n, iter, RLS=True)
    ```
-3. $RLS$
+#### RLS≠
    ```python
-   EvoLearn.Alg_1_1_EA(n=n, iter=iter, RLS=True)
+   EvoLearn.Alg_1_1_EA(n, iter, strict=True, RLS=True)
    ```
-4. $RLS^{\neq}$
+#### (μ+1)-EA
    ```python
-   EvoLearn.Alg_1_1_EA(n=n, iter=iter, strict=True, RLS=True)
+   EvoLearn.Alg_mu_1_EA(n, iter, mu)
    ```
-5. $(\mu+1)-EA$
+#### (1+λ)-EA
    ```python
-   EvoLearn.Alg_mu_1_EA(n=n, iter=iter, mu=10)
+   EvoLearn.Alg_1_lambda_EA(n, iter, lambda_)
    ```
-6. $(1+\lambda)-EA$
+#### (μ+λ)-EA
    ```python
-   EvoLearn.Alg_1_lambda_EA(n=n, iter=iter, lambda_=10)
+   EvoLearn.Alg_mu_lambda_EA(n, iter, lambda_, mu)
    ```
-7. $(\mu+\lambda)-EA$
+#### SEMO
    ```python
-   EvoLearn.Alg_mu_lambda_EA(n=n, iter=iter, lambda_=10, mu=10)
+   EvoLearn.Alg_SEMO(n, iter) 
    ```
-8. $SEMO$
+#### GSEMO
    ```python
-   EvoLearn.Alg_SEMO(n=n, iter=iter) 
-   ```
-9. $GSEMO$
-   ```python
-   EvoLearn.Alg_SEMO(n=n, iter=iter, global_=True) 
+   EvoLearn.Alg_SEMO(n, iter, global_=True) 
    ```
 
 ## UBoolean函数类
-1. OneMax问题
-2. LeadingOnes问题
-3. Peak问题
-4. Trap问题
-5. LOTZ问题
-6. COCZ问题
 
-
+#### OneMax问题
+   $$f(s)=\sum^n_{i=1}s_i$$
+#### LeadingOnes问题
+   $$f(s)=\sum^n_{i=1}\prod^i_{j=1}s_j$$
+#### Peak问题
+   $$f(s)=\prod^n_{i=1}s_i$$
+#### Trap问题
+   $$f(s)=c\cdot\prod^n_{i=1}s_i-\sum^n_{i=1}s_i$$
+#### LOTZ问题
+   $$f(s)=(\sum^n_{i=1}\prod^i_{j=1}s_j,\sum^n_{i=1}\prod^n_{j=i}(1-s_j))$$
+#### COCZ问题
+   $$f(s)=(\sum^n_{i=1}s_i,\sum^{n/2}_{i=1}s_i+\sum^n_{i/2+1}(1-s_i))$$
