@@ -3,7 +3,7 @@ Author: Derry
 Date: 2022-09-23 14:49:09
 LastEditors: Derry
 Email: drlv@mail.ustc.edu.cn
-LastEditTime: 2022-09-29 17:15:27
+LastEditTime: 2022-10-12 23:19:55
 Description: Evolutionary Learning （演化学习算法）
 '''
 import numpy as np
@@ -15,10 +15,11 @@ class EvoLearn:
     """
     演化算法是一类通用的启发式优化算法
     """
-    def __init__(self, f=None):
-        self.f = f if f else lambda x: np.sum(x)
 
-    def bit_wise_mutation(self, s):
+    def __init__(self, f=lambda x: np.sum(x)):
+        self.f = f
+
+    def _bit_wise_mutation(self, s):
         """
         逐位变异算子
         """
@@ -28,7 +29,7 @@ class EvoLearn:
         s_new[mask] = 1 - s[mask]
         return s_new
 
-    def one_bit_mutation(self, s):
+    def _one_bit_mutation(self, s):
         """
         一位变异算子
         """
@@ -51,8 +52,8 @@ class EvoLearn:
             f"Alg:{'(1+1)-EA' if not RLS else 'RLS'}{'≠' if strict else ''} on Func: {self.f.__name__}")
         s = np.random.randint(0, 2, n)
         for i in range(iter):
-            s_new = self.bit_wise_mutation(
-                s) if RLS else self.one_bit_mutation(s)
+            s_new = self._bit_wise_mutation(
+                s) if RLS else self._one_bit_mutation(s)
             if self.f(s_new) > self.f(s) or (self.f(s_new) == self.f(s) and not strict):
                 s = s_new
             print(
@@ -72,7 +73,7 @@ class EvoLearn:
         P = np.random.randint(0, 2, (mu, n))
         for i in range(iter):
             s = P[np.random.randint(0, mu)]
-            s_new = self.one_bit_mutation(s)
+            s_new = self._one_bit_mutation(s)
             FP = np.array([self.f(z) for z in P])
             z_index = np.argmax(FP)
             if self.f(s_new) > FP[z_index]:
@@ -95,7 +96,7 @@ class EvoLearn:
         for i in range(iter):
             s_new = np.zeros((lambda_, n))
             for j in range(lambda_):
-                s_new[j] = self.one_bit_mutation(s)
+                s_new[j] = self._one_bit_mutation(s)
             s_new_max = s_new[np.argmax([self.f(ss) for ss in s_new])]
             if self.f(s_new_max) > self.f(s):
                 s = s_new_max
@@ -119,7 +120,7 @@ class EvoLearn:
             s_new = np.zeros((lambda_, n))
             for j in range(lambda_):
                 s = P[np.random.randint(0, mu)]
-                s_new[j] = self.one_bit_mutation(s)
+                s_new[j] = self._one_bit_mutation(s)
             ans_set = np.concatenate((P, s_new))
             ans_set = ans_set[np.argsort(
                 [self.f(ss) for ss in ans_set])]  # 按照f值排序
@@ -143,9 +144,9 @@ class EvoLearn:
         for i in range(iter):
             s = P[np.random.randint(0, P.shape[0])]
             if global_:  # global search（全局搜索）
-                s_new = self.bit_wise_mutation(s)
+                s_new = self._bit_wise_mutation(s)
             else:  # local search（局部搜索）
-                s_new = self.one_bit_mutation(s)
+                s_new = self._one_bit_mutation(s)
             FP = np.array([self.f(z) for z in P])
             if self.f(s_new) > max(FP):
                 P = P[FP < self.f(s_new)]
