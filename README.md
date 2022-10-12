@@ -95,29 +95,29 @@ UBoolean.OneMax(s)
 
 最大化一个解中从首端开始连续1-位的数目
 
-```python
-UBoolean.LeadingOnes(s)
-```
-
 最优值：$1^n$
 
 $$
 f(s)=\sum^n_{i=1}\prod^i_{j=1}s_j
 $$
 
+```python
+UBoolean.LeadingOnes(s)
+```
+
 #### Peak问题
 
 在除最优解$1^n$以外的所有解上具有相同的相似度
 
-```python
-UBoolean.Peaks(s)
-```
-
-最优值：$0$
-
 $$
 f(s)=\prod^n_{i=1}s_i
 $$
+
+最优值：$0$
+
+```python
+UBoolean.Peaks(s)
+```
 
 #### Trap问题
 
